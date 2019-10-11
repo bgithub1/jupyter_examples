@@ -299,6 +299,12 @@ def plotly_pandas(df_in,x_column,num_of_x_ticks=20,plot_title=None,
         )
         
     fig = go.Figure(data=d_array,layout=layout)
+
+    if bar_plot:  # fix y values, which have all become positive
+        df_yvals = df_in[[c for c in df_in.columns.values if c != x_column]]
+        for i in range(len(df_yvals.columns.values)):
+            fig.data[i].y = df_yvals[df_yvals.columns.values[i]]
+        
     return fig
 
 
